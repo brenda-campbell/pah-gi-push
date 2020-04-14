@@ -19,7 +19,7 @@
         $(document).ready(function () {
             var socket = io();
             socket.on('import-status-update', function (data) {
-                // console.log(data);
+                console.log(data);
                 hideControls();
                $('#status').html(data.count + '/' + data.total);
             });
