@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>Pets at Home GI Push</title>
+</head>
+
+<body>
+    <h1>Pets at Home GI Push Notification</h1>
+    <div>
+        <a id="linkImport" href="#" title="Import">Push</a>
+    </div>
+    <div id="notStarted">Not Started</div>
+    <div id="started"><strong>Status</strong>: <span id="status">0</span> records processed</div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function () {
+            var socket = io();
+            socket.on('import-status-update', function (data) {
+                // console.log(data);
+                hideControls();
+               $('#status').html(data.count + '/' + data.total);
+            });
+
+            $('#linkImport').click(function(e){
+                hideControls();
+                e.preventDefault();
+
+                $.get('/apps/process');
+
+                return false; 
+            });
+        });
+        
+        var hideControls = function () {
+             $('#linkImport').hide();
+             $('#notStarted').hide();
+        };
+    </script>
+
+</body>
+
+</html>
